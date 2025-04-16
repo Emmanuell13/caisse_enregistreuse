@@ -1,0 +1,49 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h> 
+
+void calcule_monnaie(double monnaie) {
+    int billets[] = {2000, 1000, 500, 200, 100, 50, 25};
+    int nb_billets;
+
+    printf("Monnaie à rendre:\n");
+    for (int i = 0; i < sizeof(billets) / sizeof(billets[0]); i++) {
+        nb_billets = (int)(monnaie / billets[i]);
+        if (nb_billets > 0) {
+            printf("%d x Rs%d\n", nb_billets, billets[i]);
+            monnaie -= nb_billets * billets[i];
+        }
+    }
+
+    // Gérer les pièces (sous) - À compléter plus tard si nécessaire
+    if (monnaie > 0) {
+         printf("Reste en pièces: Rs%.2lf (à implémenter)\n", monnaie);
+    }
+}
+
+
+int main() {
+    double prix_a_payer;
+    double montant_donne;
+
+    srand(time(NULL));
+
+    prix_a_payer = (double)rand() / RAND_MAX * 1000;
+
+    printf("Prix à payer: Rs%.2lf\n", prix_a_payer);
+
+    do {
+        printf("Entrez le montant que vous donnez: Rs");
+        scanf("%lf", &montant_donne);
+
+        if (montant_donne < prix_a_payer) {
+            printf("Montant insuffisant. Veuillez réessayer.\n");
+        }
+    } while (montant_donne < prix_a_payer);
+
+    printf("Paiement accepté. Merci!\n");
+
+    calcule_monnaie(montant_donne - prix_a_payer);
+
+    return 0;
+}
